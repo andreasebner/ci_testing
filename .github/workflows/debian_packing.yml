@@ -1,0 +1,39 @@
+name: "Debian Package Generation"
+
+on:
+  push:
+    branches: [ master, 1\.1, 1\.2, 1\.3, 1\.4, 1\.5 ]
+
+jobs:
+  Debian-Package-Branch-Preperation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      #TODO check if pack-tmp does work
+      - run : git checkout -b pack-tmp
+      - run : git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - run : git config --local user.name "github-actions[bot]"
+      - run: cp -r deps/mdnsd deps/mdnsd_back
+      - run: cp -r deps/ua-nodeset deps/ua-nodeset_back
+      - run: git rm -rf --cached deps/mdnsd
+      - run: git rm -rf --cached deps/ua-nodeset
+      - run: mv deps/mdnsd_back deps/mdnsd
+      - run: rm -rf deps/mdnsd/.git
+      - run: mv deps/ua-nodeset_back deps/ua-nodeset
+      - run: rm -rf deps/ua-nodeset/.git
+      - run: rm -rf .gitmodules
+      - run: git add deps/*
+      - run: git add debian/*
+      - run: git add CMakeLists.txt
+      - run: git commit -m "[ci skip] Pack with inline submodules"
+      #- run: git remote add origin-auth https://$GITAUTH@github.com/${TRAVIS_REPO_SLUG}
+      #- run: git push -uf origin-auth pack-tmp/${REAL_BRANCH}:pack/${REAL_BRANCH}
+      - name: Branch name
+        run: echo running on branch ${GITHUB_REF##*/}
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: pack/test
