@@ -30,7 +30,7 @@ jobs:
       - run: git add CMakeLists.txt
       - run: git commit -m "[ci skip] Pack with inline submodules"
       - name: Branch name
-        run: echo running on branch pack/ ${GITHUB_REF##*/}
+        run: echo running on branch pack\/ ${GITHUB_REF##*/}
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
