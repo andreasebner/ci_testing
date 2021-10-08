@@ -12,9 +12,9 @@ jobs:
         with:
           submodules: true
       #TODO check if pack-tmp does work
-      - run : git checkout -b pack-tmp
-      - run : git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - run : git config --local user.name "github-actions[bot]"
+      - run: git checkout -b pack-tmp
+      - run: git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - run: git config --local user.name "github-actions[bot]"
       - run: cp -r deps/mdnsd deps/mdnsd_back
       - run: cp -r deps/ua-nodeset deps/ua-nodeset_back
       - run: git rm -rf --cached deps/mdnsd
