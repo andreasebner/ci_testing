@@ -12,7 +12,7 @@ jobs:
         with:
           submodules: true
       #TODO check if pack-tmp does work
-      - run: echo ls
+      - run: ls
       - run : git checkout -b pack-tmp
       - run : git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - run : git config --local user.name "github-actions[bot]"
