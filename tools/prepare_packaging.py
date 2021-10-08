@@ -13,7 +13,10 @@ import datetime
 
 dirpath = os.path.join(os.path.dirname(os.path.realpath(__file__)),"..")
 
-git_describe_version = subprocess.check_output(["git", "describe", "--tags", "--dirty", "--match", "v*"]).decode('utf-8').strip()
+try:
+    git_describe_version = subprocess.check_output(["git", "describe", "--tags", "--dirty", "--match", "v*"]).decode('utf-8').strip()
+except subprocess.CalledProcessError as e:
+    print("Exception on process, rc=", e.returncode, "output=", e.output)
 
 # v1.2
 # v1.2.3
